@@ -83,6 +83,12 @@ def scrub_position(x,y,adc,spread,x_window = (0,2048),y_window = (0,2048)):
     ind = where((x > x_window[0]) & (x < x_window[1]) & (y > y_window[0]) & (y < y_window[1]))
     return x[ind],y[ind],adc[ind],spread[ind]
 
+def load_valid_events(photon_list):
+    tempx,tempy,tempadc,tempspread = loadtxt(photon_list)
+    tempx,tempy,tempadc,tempspread = pcounts.scrub_cosmics(tempx,tempy,tempadc,tempspread)
+    x,y,adc,spread = pcounts.scrub_thermal(tempx,tempy,tempadc,tempspread)
+    return x,y,adc,spread
+
 ###################################################
 # Outputting and computing data products.
 
